@@ -11,6 +11,8 @@
 		E565FF092B2578C2007BB1CF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565FF082B2578C2007BB1CF /* ContentView.swift */; };
 		E565FF0B2B2578C3007BB1CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E565FF0A2B2578C3007BB1CF /* Assets.xcassets */; };
 		E565FF0E2B2578C3007BB1CF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E565FF0D2B2578C3007BB1CF /* Preview Assets.xcassets */; };
+		E56AD1B32B713C3700146F5C /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56AD1B22B713C3700146F5C /* LocationViewModel.swift */; };
+		E56AD1B52B713C5800146F5C /* StopWatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56AD1B42B713C5800146F5C /* StopWatchManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		E565FF082B2578C2007BB1CF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E565FF0A2B2578C3007BB1CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E565FF0D2B2578C3007BB1CF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E56AD1B22B713C3700146F5C /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
+		E56AD1B42B713C5800146F5C /* StopWatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			children = (
 				E565FF062B2578C2007BB1CF /* TrailReportApp.swift */,
 				E565FF082B2578C2007BB1CF /* ContentView.swift */,
+				E56AD1B22B713C3700146F5C /* LocationViewModel.swift */,
+				E56AD1B42B713C5800146F5C /* StopWatchManager.swift */,
 				E565FF0A2B2578C3007BB1CF /* Assets.xcassets */,
 				E565FF0C2B2578C3007BB1CF /* Preview Content */,
 			);
@@ -138,6 +144,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E565FF092B2578C2007BB1CF /* ContentView.swift in Sources */,
+				E56AD1B52B713C5800146F5C /* StopWatchManager.swift in Sources */,
+				E56AD1B32B713C3700146F5C /* LocationViewModel.swift in Sources */,
 				E565FF072B2578C2007BB1CF /* TrailReportApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +280,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TrailReport/Preview Content\"";
+				DEVELOPMENT_TEAM = PYRF6B4Y6C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -300,6 +309,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TrailReport/Preview Content\"";
+				DEVELOPMENT_TEAM = PYRF6B4Y6C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
