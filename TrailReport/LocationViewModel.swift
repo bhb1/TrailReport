@@ -50,7 +50,20 @@ class LocationViewModel: NSObject, ObservableObject{
     self.locationManager.requestWhenInUseAuthorization()
     self.locationManager.requestAlwaysAuthorization()
     self.locationManager.startUpdatingLocation()
-      print(locationManager.authorizationStatus.rawValue.description)
+    print(locationManager.authorizationStatus.rawValue.description)
+    switch locationManager.authorizationStatus {
+              case .notDetermined:
+                  print("When user did not yet determined")
+              case .restricted:
+                  print("Restricted by parental control")
+              case .denied:
+                  print("When user select option Dont't Allow")
+              case .authorizedWhenInUse:
+                  print("When user select option Allow While Using App or Allow Once")
+              default:
+                  print("default")
+              }
+
   }
 }
 

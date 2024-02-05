@@ -23,6 +23,7 @@
 		E565FF0D2B2578C3007BB1CF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E56AD1B22B713C3700146F5C /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		E56AD1B42B713C5800146F5C /* StopWatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchManager.swift; sourceTree = "<group>"; };
+		E56AD1B62B71A0D200146F5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +56,7 @@
 		E565FF052B2578C2007BB1CF /* TrailReport */ = {
 			isa = PBXGroup;
 			children = (
+				E56AD1B62B71A0D200146F5C /* Info.plist */,
 				E565FF062B2578C2007BB1CF /* TrailReportApp.swift */,
 				E565FF082B2578C2007BB1CF /* ContentView.swift */,
 				E56AD1B22B713C3700146F5C /* LocationViewModel.swift */,
@@ -283,6 +285,13 @@
 				DEVELOPMENT_TEAM = PYRF6B4Y6C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TrailReport/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Please allow for GPS usage. ";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Please allow for GPS usage. ";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Please allow for GPS usage. ";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow for GPS usage. ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -312,6 +321,13 @@
 				DEVELOPMENT_TEAM = PYRF6B4Y6C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TrailReport/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Please allow for GPS usage. ";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Please allow for GPS usage. ";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Please allow for GPS usage. ";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow for GPS usage. ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

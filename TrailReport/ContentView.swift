@@ -22,7 +22,6 @@ struct ContentView: View {
     
     @ObservedObject var locationViewModel = LocationViewModel()
     
-   // @State var locationManager = LocationManager()
     @ObservedObject var stopwatch = StopWatchManager()
     
     init(){
@@ -212,7 +211,7 @@ struct ContentView: View {
                 Spacer()
                 Button(action: {self.locationViewModel.reset();self.stopwatch.reset()})
                 {
-                    Text("Reset")
+                    Text("CLEAR")
                         .fontWeight(.bold)
                         .font(.title)
                         .frame(width: 150.0, height: 75.0, alignment: Alignment.center)
@@ -225,9 +224,9 @@ struct ContentView: View {
                 }.alert(isPresented: $showUploadSuccess) {
                     Alert(title: Text("Upload Successful."), message: Text(""), dismissButton: .default(Text("OK")))
                 }
-                
                 Spacer()
-            }
+                
+                        }
             //HOME TAB END
             .tabItem {
                 
@@ -241,25 +240,37 @@ struct ContentView: View {
                     
                 }
             //SETTINGS TAB START
-            Form {
-                
-                HStack{
-                    Text("GPS Resolution: ")
-                    TextField("",text: $filterDistanceString)
-                }
-                HStack{
-                    Text("Device ID: ")
-                    TextField("", text: $deviceIDString )
+            VStack{
+                Form {
                     
-                }
-                HStack{
-                    Text("Upload URL: ")
-                    TextField("", text: $uploadURLString )
-                }
-                
-                
-                
+                    HStack{
+                        Text("GPS Point Spacing (m): ")
+                        TextField("",text: $filterDistanceString)
+                    }
+                    HStack{
+                        Text("Device ID: ")
+                        TextField("", text: $deviceIDString )
+                        
+                    }
+                    HStack{
+                        Text("Upload URL: ")
+                        TextField("", text: $uploadURLString )
+                    }
+                    
+                    
+//                    Button("Save", action: {
+//                        let deviceID: Int = Int(deviceIDString) ?? 12345
+//                        let uploadURL: URL = URL(string: uploadURLString) ?? URL(string:"https://nabohund.no/craftsbury/craftsbury.php")!
+//                        let filterDistance: Int = Int(filterDistanceString) ?? 10
+//                        UserDefaults.standard.setValue(deviceID, forKey: "deviceID")
+//                        UserDefaults.standard.setValue(uploadURL, forKey: "uploadURL")
+//                        UserDefaults.standard.set(filterDistance, forKey: "filterDistance")
+//                        
+//                        self.isPresented.toggle()})
+//                    
+               }
             }
+           
             //SETTINGS TAB END
             .tabItem {
                 
