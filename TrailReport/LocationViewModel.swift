@@ -11,6 +11,8 @@
 import Foundation
 import Combine
 import CoreLocation
+import MapKit
+import _MapKit_SwiftUI
 
 class LocationViewModel: NSObject, ObservableObject{
     @Published var userLatitude: Double = 0
@@ -21,10 +23,13 @@ class LocationViewModel: NSObject, ObservableObject{
    
     @Published var points: [CLLocation] = []
     @Published var filteredPoints: [CLLocation] = []
+    @Published var filteredPoints2D: [CLLocationCoordinate2D] = []
     
     @Published var filterDistance: Int
-    @Published var uploadURL: URL
+   // @Published var uploadURL: URL
     @Published var deviceID: Int
+    
+    
        
     
     private let locationManager = CLLocationManager()
@@ -35,12 +40,13 @@ class LocationViewModel: NSObject, ObservableObject{
         self.distance = 0.0
         self.points = []
         self.filteredPoints = []
+        self.filteredPoints2D = []
         
     }
     
   override init() {
     self.filterDistance = UserDefaults.standard.object(forKey: "filterDistance") as? Int ?? 5
-    self.uploadURL = UserDefaults.standard.object(forKey: "uploadURL") as? URL ?? URL(string: "https://b9ac252e833b4afa399912e731d0da49.m.pipedream.net")!
+    //self.uploadURL = UserDefaults.standard.object(forKey: "uploadURL") as? URL ?? URL(string: "https://b9ac252e833b4afa399912e731d0da49.m.pipedream.net")!
     self.deviceID = UserDefaults.standard.object(forKey: "deviceID") as? Int ?? 12347
     
     super.init()
@@ -77,11 +83,13 @@ extension LocationViewModel: CLLocationManagerDelegate {
     
     //Check for status
     if (live) {
-        print(filterDistance)
+        
         //Check that there exists a point to measure off of
         if (filteredPoints.count == 0) {
             //Points is empty, append point
             filteredPoints.append(location)
+            filteredPoints2D.append(CLLocationCoordinate2D.init(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+            
         
         //Points is not empty, check the distance before adding
         } else {
@@ -89,6 +97,8 @@ extension LocationViewModel: CLLocationManagerDelegate {
             
             if (delta > Double(filterDistance) ) {
                 filteredPoints.append(location)
+                filteredPoints2D.append(CLLocationCoordinate2D.init(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+                
                 self.distance += delta
             }
         }

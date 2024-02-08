@@ -11,8 +11,11 @@ import MapKit
 
 struct ContentView: View {
     
+    
+    
     @State var deviceIDString: String
     @State var uploadURLString: String
+    @State var logURLString: String
     @State var filterDistanceString: String
     
     @State var showUploadSuccess = false
@@ -27,12 +30,15 @@ struct ContentView: View {
     init(){
         let deviceIDString_init = String(UserDefaults.standard.object(forKey: "deviceID") as? Int ?? 12345)
         
-        let uploadURLString_init = (UserDefaults.standard.object(forKey: "uploadURL") as? URL ?? URL(string: "https://b9ac252e833b4afa399912e731d0da49.m.pipedream.net")!).absoluteString
+        let uploadURLString_init = (UserDefaults.standard.object(forKey: "uploadURL") as? URL ?? URL(string: "https://nabohund.no/craftsbury/craftsbury.php")!).absoluteString
+        
+        let logURLString_init = (UserDefaults.standard.object(forKey: "logURL") as? URL ?? URL(string: "https://b9ac252e833b4afa399912e731d0da49.m.pipedream.net")!).absoluteString
         
         let filterDistanceString_init = String(UserDefaults.standard.object(forKey: "filterDistance") as? Int ?? 10)
         
         _filterDistanceString = State(initialValue: filterDistanceString_init)
         _uploadURLString = State(initialValue: uploadURLString_init)
+        _logURLString = State(initialValue: logURLString_init)
         _deviceIDString = State(initialValue: deviceIDString_init)
         
         
@@ -59,7 +65,7 @@ struct ContentView: View {
     }
     
     func upload(url: URL) {
-        print("here")
+        print("Formatting Data.")
         let json = self.pointsToJSON(points: self.locationViewModel.filteredPoints)
         
         let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [])
@@ -70,13 +76,12 @@ struct ContentView: View {
         print("Upload started.")
         
         // create post request
-        // let url = URL(string: "https://b9ac252e833b4afa399912e731d0da49.m.pipedream.net")!
-        //let url = URL(string: "https://nabohund.no/craftsbury/craftsbury.php")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody =  jsonData
         
+        print(request)
         // insert json data to the request
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -132,40 +137,43 @@ struct ContentView: View {
         TabView {
             //HOME TAB START
             VStack {
+                
                 Spacer()
                 HStack{
-                    Spacer()
-                    HStack{
-                        Text("Duration: ")
-                            .fontWeight(.bold)
-                        Text(stopwatch.formatElapsed(elapsed: self.stopwatch.secondsElapsed))
-                    }
-                    Spacer()
-                    HStack{
-                        Text("Distance: ")
-                            .fontWeight(.bold)
-                        Text("\(self.locationViewModel.distance, specifier: "%.2f")")
-                    }
-                    Spacer()
-                }
-                VStack {
-                    HStack {
-                        Spacer()
-                        HStack {
-                            Text("Latitude: ")
-                                .fontWeight(.bold)
-                            Text("\(locationViewModel.userLatitude)")
-                            Spacer()
-                            Text("Longitude: ")
-                                .fontWeight(.bold)
-                            Text("\(locationViewModel.userLongitude)")
-                            //Text(locationManager.location?.description ?? "No Location Provided!")
-                            
-                        }
-                        Spacer()
-                    }
+                    Text("Duration: ")
+                        .fontWeight(.bold)
+                    Text(stopwatch.formatElapsed(elapsed: self.stopwatch.secondsElapsed))
                 }
                 Spacer()
+                HStack{
+                    Text("Distance: ")
+                        .fontWeight(.bold)
+                    Text("\(self.locationViewModel.distance, specifier: "%.2f")")
+                }
+                
+                
+                Spacer()
+                HStack{
+                    Text("Latitude: ")
+                        .fontWeight(.bold)
+                    
+                    Text("\(locationViewModel.userLatitude)")
+                    
+                }
+                Spacer()
+                HStack{
+                    Text("Longitude: ")
+                        .fontWeight(.bold)
+                    
+                    Text("\(locationViewModel.userLongitude)")
+                    
+                    //Text(locationManager.location?.description ?? "No Location Provided!")
+                }
+                
+                
+                Spacer()
+                
+                
                 
                 Button(action: { self.locationViewModel.live.toggle(); self.stopwatch.toggle()})
                 {
@@ -195,7 +203,7 @@ struct ContentView: View {
                     
                 }
                 Spacer()
-                Button(action: {upload(url: (URL(string: "https://b9ac252e833b4afa399912e731d0da49.m.pipedream.net")!))})
+                Button(action: {upload(url: (URL(string: self.uploadURLString)!))})
                 {
                     Text("UPLOAD")
                         .fontWeight(.bold)
@@ -207,11 +215,13 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding(10)
                     
+                }.alert(isPresented: $showUploadSuccess) {
+                    Alert(title: Text("Upload Successful."), message: Text(""), dismissButton: .default(Text("OK")))
                 }
                 Spacer()
                 Button(action: {self.locationViewModel.reset();self.stopwatch.reset()})
                 {
-                    Text("CLEAR")
+                    Text("RESET")
                         .fontWeight(.bold)
                         .font(.title)
                         .frame(width: 150.0, height: 75.0, alignment: Alignment.center)
@@ -221,19 +231,24 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding(10)
                     
-                }.alert(isPresented: $showUploadSuccess) {
-                    Alert(title: Text("Upload Successful."), message: Text(""), dismissButton: .default(Text("OK")))
                 }
                 Spacer()
                 
-                        }
+            }
             //HOME TAB END
             .tabItem {
                 
-                Label("Home", systemImage: "play")
+                Label("Run", systemImage: "play")
             }
             //MAP TAB START
-            Text("Display")
+         
+            Map() {
+                //if (self.locationViewModel.filteredPoints2D.isEmpty) {
+                  //  MapPolyline(coordinates: self.locationViewModel.filteredPoints2D, contourStyle: MapPolyline.ContourStyle.geodesic)
+                    //   .stroke(.blue, lineWidth: 13)
+                //}
+                    
+            }
             //MAP TAB END
                 .tabItem {
                     Label("Map", systemImage: "map")
@@ -245,32 +260,72 @@ struct ContentView: View {
                     
                     HStack{
                         Text("GPS Point Spacing (m): ")
+                            .bold()
                         TextField("",text: $filterDistanceString)
+                        
                     }
                     HStack{
                         Text("Device ID: ")
+                            .bold()
                         TextField("", text: $deviceIDString )
                         
                     }
                     HStack{
                         Text("Upload URL: ")
+                            .bold()
                         TextField("", text: $uploadURLString )
+                    }
+                    HStack{
+                        Text("Logger URL: ")
+                            .bold()
+                        TextField("", text: $logURLString )
                     }
                     
                     
-//                    Button("Save", action: {
-//                        let deviceID: Int = Int(deviceIDString) ?? 12345
-//                        let uploadURL: URL = URL(string: uploadURLString) ?? URL(string:"https://nabohund.no/craftsbury/craftsbury.php")!
-//                        let filterDistance: Int = Int(filterDistanceString) ?? 10
-//                        UserDefaults.standard.setValue(deviceID, forKey: "deviceID")
-//                        UserDefaults.standard.setValue(uploadURL, forKey: "uploadURL")
-//                        UserDefaults.standard.set(filterDistance, forKey: "filterDistance")
-//                        
-//                        self.isPresented.toggle()})
-//                    
-               }
+                    VStack{
+                        Spacer()
+                        HStack{
+                            Spacer()
+                            Button("Send Log", action: {upload(url: (URL(string: self.logURLString)!))})
+                                .fontWeight(.bold)
+                                .font(.title)
+                                .frame(width: 125.0, height: 25.0, alignment: Alignment.center)
+                                .padding()
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .buttonStyle(BorderlessButtonStyle())
+                            Spacer()
+                        }
+                        
+                        Spacer()
+                        Button("Save", action: {
+                            let deviceID: Int = Int(deviceIDString) ?? 12345
+                            let filterDistance: Int = Int(filterDistanceString) ?? 10
+                           
+                            UserDefaults.standard.setValue(deviceID, forKey: "deviceID")
+                            UserDefaults.standard.setValue(uploadURLString, forKey: "uploadURL")
+                            UserDefaults.standard.setValue(logURLString, forKey: "logURL")
+                            UserDefaults.standard.set(filterDistance, forKey: "filterDistance")
+                            
+                            self.isPresented.toggle()})
+                        .fontWeight(.bold)
+                        .font(.title)
+                        .frame(width: 125.0, height: 25.0, alignment: Alignment.center)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .buttonStyle(BorderlessButtonStyle())
+                        Spacer()
+                        
+                    }
+                }
+                
             }
-           
+            
             //SETTINGS TAB END
             .tabItem {
                 
