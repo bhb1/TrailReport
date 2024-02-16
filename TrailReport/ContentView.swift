@@ -30,7 +30,7 @@ struct ContentView: View {
     init(){
         let deviceIDString_init = String(UserDefaults.standard.object(forKey: "deviceID") as? Int ?? 12345)
         
-        let uploadURLString_init = (UserDefaults.standard.object(forKey: "uploadURL") as? URL ?? URL(string: "https://nabohund.no/craftsbury/craftsbury.php")!).absoluteString
+        let uploadURLString_init = (UserDefaults.standard.object(forKey: "uploadURL") as? URL ?? URL(string: "https://nabohund.no/craftsbury/craft.php")!).absoluteString
         
         let logURLString_init = (UserDefaults.standard.object(forKey: "logURL") as? URL ?? URL(string: "https://b9ac252e833b4afa399912e731d0da49.m.pipedream.net")!).absoluteString
         
@@ -65,28 +65,21 @@ struct ContentView: View {
     }
     
     func upload(url: URL) {
-        print("Formatting Data.")
         let json = self.pointsToJSON(points: self.locationViewModel.filteredPoints)
         
         let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [])
         
         let jsonString = String(data: jsonData!, encoding: String.Encoding.ascii)!
-        print(jsonString)
-        
-        print("Upload started.")
-        
-        // create post request
-        
+           
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody =  jsonData
-        
-        print(request)
-        // insert json data to the request
-        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        //request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+    
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            
-            print()
+    
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
@@ -98,19 +91,10 @@ struct ContentView: View {
             } else {
                 let str = String(decoding: data, as: UTF8.self)
                 print(str)
-                if str == "OK" {
-                    self.showUploadSuccess = true
-                    
-                } else {
-                    self.showUploadFailure = true
-                }
             }
         }
-        
         task.resume()
-        
     }
-    
     
     func pointsToJSON(points: [CLLocation]) -> [String:Any] {
         
