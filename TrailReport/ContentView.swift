@@ -210,7 +210,7 @@ struct ContentView: View {
                         .font(.title)
                         .frame(width: 150.0, height: 75.0, alignment: Alignment.center)
                         .padding()
-                        .background(Color.orange)
+                        .background(Color.gray)
                         .cornerRadius(10)
                         .foregroundColor(.white)
                         .padding(10)
@@ -227,10 +227,10 @@ struct ContentView: View {
             //MAP TAB START
          
             Map() {
-                //if (self.locationViewModel.filteredPoints2D.isEmpty) {
-                  //  MapPolyline(coordinates: self.locationViewModel.filteredPoints2D, contourStyle: MapPolyline.ContourStyle.geodesic)
-                    //   .stroke(.blue, lineWidth: 13)
-                //}
+                if (!self.locationViewModel.filteredPoints2D.isEmpty) {
+                 MapPolyline(coordinates: self.locationViewModel.filteredPoints2D, contourStyle: MapPolyline.ContourStyle.geodesic)
+                    .stroke(.blue, lineWidth: 13)
+                }
                     
             }
             //MAP TAB END
